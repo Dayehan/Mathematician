@@ -1,0 +1,35 @@
+{
+  "name": "assignment1",
+  "version": "1.0.0",
+  "description": "repeat",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.18.6",
+    "@babel/eslint-parser": "^7.18.2",
+    "@babel/plugin-proposal-object-rest-spread": "^7.18.6",
+    "@babel/preset-env": "^7.18.6",
+    "@babel/register": "^7.18.6",
+    "@rollup/plugin-babel": "^5.3.1",
+    "@rollup/plugin-commonjs": "^22.0.1",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.26.0",
+    "jest": "^28.1.2",
+    "mocha": "^10.0.0",
+    "postcss": "^8.4.14",
+    "postcss-import": "^14.1.0",
+    "rollup": "^2.75.7",
+    "rollup-plugin-livereload": "^2.0.5",
+    "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-serve": "^2.0.0"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "build:watch": "rollup -c -w",
+    "lint": "eslint src/",
+    "pretest": "eslint src/",
+    "test": "mocha",
+    "test:watch": "mocha -w"
+  }
+}
