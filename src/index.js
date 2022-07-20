@@ -4,9 +4,9 @@ class Game{
     constructor(){
         this.firstNumber = null;
         this.secondNumber = null;
-        this.answer = 0;
-        this.gameLevel = 0;
-        this.time = 0;
+        this.answer = null;
+        this.gameLevel = 1;
+        this.time = new Date();
         this.display=new Display();
     }
     
@@ -19,7 +19,7 @@ class Game{
     }
     start(){
         this.generateNumber();
-        this.display.render(2,this.firstNumber, this.secondNumber);
+        this.display.render("SOLVE_QUESTION",this.firstNumber, this.secondNumber);
         
         this.gameLevel = 1;
       
@@ -27,7 +27,7 @@ class Game{
     validateAnswer(answer){
         if (answer == this.answer && this.gameLevel <= 3) {
             this.generateNumber();
-            this.display.render(2,this.firstNumber, this.secondNumber);
+            this.display.render("SOLVE_QUESTION",this.firstNumber, this.secondNumber);
             this.gameLevel++;
            
         } else if (answer == this.answer && this.gameLevel >= 3) {
@@ -40,7 +40,7 @@ class Game{
         this.time = Date.now();
     }
     end(){
-        this.display.render(3,Date.now()-this.time);   
+        this.display.render("GAME_OVER",Date.now()-this.time);   
         this.gameLevel=0;
         this.time=0;
         this.answer=0;
@@ -48,7 +48,7 @@ class Game{
 
 }
 const game = new Game();
-game.display.render(1);
+game.display.render("START_GAME");
 
 root.addEventListener('click', (e)=> {
     const target=e.target;

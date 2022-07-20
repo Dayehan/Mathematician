@@ -8,9 +8,9 @@
        this.root = document.querySelector('#root');
      }
 
-     render(state, fNum, sNum) {
-       switch (state) {
-         case 1:
+     render(gameState, firstNumber, secondNumber) {
+       switch (gameState) {
+         case "START_GAME":
            root.innerHTML = `
                <div class="container" id="play">
                    <p>Do you want to play?</p>
@@ -19,14 +19,14 @@
                `;
            break;
 
-         case 2:
+         case "SOLVE_QUESTION":
            root.innerHTML = `
                <div id="question-container" class="box"> 
                        <div class="fixedQuestion">Are you sure you are a Fabulous Mathematician?</div>    
                            <div class="insertValue"> 
-                               <p id="firstNum" class="circle">${fNum}</p> 
+                               <p id="firstNum" class="circle">${firstNumber}</p> 
                                <p>+</p>
-                               <p id="secondNum" class="circle">${sNum}</p>  
+                               <p id="secondNum" class="circle">${secondNumber}</p>  
                                <p><span>=</span></p>
                            </div>
                        <input class="answer" autofocus>
@@ -34,7 +34,7 @@
                </div>`;
            break;
 
-         case 3:
+         case "GAME_OVER":
            root.innerHTML = `
                    <div class="container">
                    <video autoplay loop muted plays-inline class="video-back">
@@ -42,7 +42,7 @@
                    </video>
                    <p id="won">Congratulations you are a fabulous Mathematician!!!<p>
                    <br></br>
-                   <p>GAME OVER! You spent ${fNum} milliseconds playing</p>
+                   <p>GAME OVER! You spent ${firstNumber} milliseconds playing</p>
                    <button id="start-button">REPLAY?</button>
                   
                </div>`;
@@ -58,9 +58,9 @@
      constructor() {
        this.firstNumber = null;
        this.secondNumber = null;
-       this.answer = 0;
-       this.gameLevel = 0;
-       this.time = 0;
+       this.answer = null;
+       this.gameLevel = 1;
+       this.time = new Date();
        this.display = new Display();
      }
 
@@ -73,14 +73,14 @@
 
      start() {
        this.generateNumber();
-       this.display.render(2, this.firstNumber, this.secondNumber);
+       this.display.render("SOLVE_QUESTION", this.firstNumber, this.secondNumber);
        this.gameLevel = 1;
      }
 
      validateAnswer(answer) {
        if (answer == this.answer && this.gameLevel <= 3) {
          this.generateNumber();
-         this.display.render(2, this.firstNumber, this.secondNumber);
+         this.display.render("SOLVE_QUESTION", this.firstNumber, this.secondNumber);
          this.gameLevel++;
        } else if (answer == this.answer && this.gameLevel >= 3) {
          this.end();
@@ -93,7 +93,7 @@
      }
 
      end() {
-       this.display.render(3, Date.now() - this.time);
+       this.display.render("GAME_OVER", Date.now() - this.time);
        this.gameLevel = 0;
        this.time = 0;
        this.answer = 0;
@@ -102,7 +102,7 @@
    }
 
    const game = new Game();
-   game.display.render(1);
+   game.display.render("START_GAME");
    root$1.addEventListener('click', e => {
      const target = e.target;
 
